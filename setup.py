@@ -16,19 +16,19 @@ requirements = [
 included_files = {
     'carveme': [
         'config.cfg',
-        'data/input/bigg_models.csv',
+        'data/input/bigg_models.tsv',
         'data/input/biomass_db.tsv',
-        'data/input/manually_curated.csv',
+        'data/input/manually_curated.tsv',
         'data/input/media_db.tsv',
-        'data/input/metabolomics_park2016.csv',
+#        'data/input/metabolomics_park2016.csv', deleted 5cbc611af5aa265c39882f7a88bf357f3261b170
         'data/input/unbalanced_metabolites.csv',
         'data/generated/bigg_proteins.faa',
-        'data/input/equilibrator_compounds.tsv.gz',
+        'data/input/mnx_compounds.tsv',
         'data/input/refseq_release_201.tsv.gz',
-        'data/generated/bigg_gibbs.csv',
+#        'data/generated/bigg_gibbs.csv', # deleted c897f41d7d03c27ca12ecd9ee97337355338c378
         'data/generated/bigg_gprs.csv.gz',
         'data/generated/model_specific_data.csv.gz',
-        'data/generated/universe_draft.xml.gz',
+        'data/generated/bigg_universe.xml.gz',
         'data/generated/universe_bacteria.xml.gz',
         'data/generated/universe_grampos.xml.gz',
         'data/generated/universe_gramneg.xml.gz',
@@ -70,7 +70,15 @@ included_files = {
         'data/benchmark/results/essentiality.tsv',
     ]
 }
-
+missing_files = []
+for path in included_files["carveme"]:
+    fullpath = os.path.join("carveme", path)
+    if not os.path.exists(fullpath):
+        missing_files.append(fullpath)
+if missing_files:
+    print("files required for install are not found:\n")
+    print("\n".join(missing_files))
+    raise ValueError("missing files; exiting")
 
 setup(
     name='carveme',
