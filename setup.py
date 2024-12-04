@@ -22,7 +22,7 @@ included_files = {
         'data/input/media_db.tsv',
         'data/input/metabolomics_park2016.csv',
         'data/input/unbalanced_metabolites.csv',
-        'data/input/bigg_proteins.faa',
+        'data/generated/bigg_proteins.faa',
         'data/input/equilibrator_compounds.tsv.gz',
         'data/input/refseq_release_201.tsv.gz',
         'data/generated/bigg_gibbs.csv',
@@ -100,7 +100,7 @@ setup(
     keywords='carveme',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
-        'Environment :: Console', 
+        'Environment :: Console',
         'Intended Audience :: Science/Research',
         'Topic :: Scientific/Engineering :: Bio-Informatics',
         'Programming Language :: Python :: 3.6',
