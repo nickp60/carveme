@@ -26,6 +26,7 @@ included_files = {
         'data/generated/bigg_proteins.faa',
         'data/input/mnx_compounds.tsv',
         'data/input/refseq_release_201.tsv.gz',
+        'data/generated/gene_annotations.tsv.gz',
 #        'data/generated/bigg_gibbs.csv', # deleted c897f41d7d03c27ca12ecd9ee97337355338c378
         'data/generated/bigg_gprs.csv.gz',
         'data/generated/model_specific_data.csv.gz',
@@ -84,11 +85,18 @@ if missing_files:
 config = ConfigParser()
 project_dir = "carveme"
 config.read(os.path.join(project_dir, 'config.cfg'))
+config_files = []
 for chunk in ["input", "generated"]:
     for k,v in config[chunk].items():
         vpath = os.path.join(project_dir, v)
-        if not os.path.exists(vpath) and k != "diamond_db":
+        if k in ["folder", "diamond_db"]: continue
+        if not os.path.exists(vpath):
             raise ValueError(f'file {vpath} not found')
+        elif v not in included_files["carveme"]:
+            raise ValueError(f'config file {vpath} not included in setup.py')
+        else:
+            config_files.append(v)
+
 
 
 setup(
