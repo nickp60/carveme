@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """The setup script."""
-
+import os
+from configparser import ConfigParser
 from setuptools import setup, find_packages
 
 with open('README.rst') as readme_file:
@@ -79,6 +80,16 @@ if missing_files:
     print("files required for install are not found:\n")
     print("\n".join(missing_files))
     raise ValueError("missing files; exiting")
+
+config = ConfigParser()
+project_dir = "carveme"
+config.read(os.path.join(project_dir, 'config.cfg'))
+for chunk in ["input", "generated"]:
+    for k,v in config[chunk].items():
+        vpath = os.path.join(project_dir, v)
+        if not os.path.exists(vpath) and k != "diamond_db":
+            raise ValueError(f'file {vpath} not found')
+
 
 setup(
     name='carveme',
